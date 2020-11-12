@@ -1,0 +1,24 @@
+<a [routerLink]="['/product/add']" class="btn btn-success"> Add Product</a>
+<button class="btn btn-danger" (click)="logout()">Logout</button>
+
+<table class="table">
+    <thead>
+        <tr class="bg-dark text-white">
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Status</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let product of this.products" [routerLink]="['/product/details/'+product.productId]">
+            <td>{{ product.name }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.status ? "Active":"Inactive" }}</td>
+            <td>
+                <a href="javascript:void(0);" class="btn btn-danger" (click)="deleteProduct(product)">Delete</a>
+            </td>
+
+        </tr>
+    </tbody>
+</table>
