@@ -25,8 +25,8 @@ export class ViewComponent implements OnInit {
     })
   }
 
-  deleteProduct(product: Product): void {
-
+  deleteProduct(e, product: Product): void {
+    e.stopPropagation();
     this.apiservice.deleteProduct(product.productId).subscribe(data => {
       this.products = this.products.filter(p => { p !== product })
     })

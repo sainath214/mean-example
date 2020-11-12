@@ -16,7 +16,7 @@
             <td>{{ product.price }}</td>
             <td>{{ product.status ? "Active":"Inactive" }}</td>
             <td>
-                <a href="javascript:void(0);" class="btn btn-danger" (click)="deleteProduct(product)">Delete</a>
+                <a href="javascript:void(0);" class="btn btn-danger" (click)="deleteProduct($event,product)">Delete</a>
             </td>
 
         </tr>
