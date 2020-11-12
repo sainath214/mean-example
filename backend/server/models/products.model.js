@@ -17,6 +17,10 @@ var Products = db.sequelize.define('products', {
         defaultValue: false
 
     },
+    image: {
+        type: db.Sequelize.STRING,
+        allowNull: true,
+    },
     status: {
         type: db.Sequelize.BOOLEAN,
         allowNull: false,
@@ -25,6 +29,12 @@ var Products = db.sequelize.define('products', {
     }
 }, {
         timestamps: false,
+        getterMethods:{
+            imagePath() {
+                return this.image ? "server/uploads/" + this.profilepic : '';
+                
+            }
+        }
     })
 
 module.exports = Products;

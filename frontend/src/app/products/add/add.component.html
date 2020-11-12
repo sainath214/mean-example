@@ -1,5 +1,5 @@
 <div class="col-md-6 user-container">
-    <form [formGroup]="addProduct" (ngSubmit)="onSubmit()">
+    <form [formGroup]="addProduct" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
         <div class="form-group">
             <label for="name">Product Name</label>
             <input type="text" class="form-control" formControlName="name" placeholder="Name" name='name'>
@@ -11,6 +11,22 @@
         <div class="form-group">
             <label for="price">Price</label>
             <input type="text" class="form-control" formControlName="price" placeholder="Price" name='price'>
+        </div>
+        <div class="col-md-6 offset-md-3">
+            <h3>Choose File</h3>
+            <div class="form-group">
+                <input type="file" name="image" formControlName="image" (change)="fileProgress($event)" />
+            </div>
+            <div *ngIf="fileUploadProgress">
+                Upload progress: {{ fileUploadProgress }}
+            </div>
+            <div class="image-preview mb-3" *ngIf="previewUrl">
+                <img [src]="previewUrl" height="300" />
+            </div>
+
+            <div class="mb-3" *ngIf="uploadedFilePath">
+                {{uploadedFilePath}}
+            </div>
         </div>
         <button class="btn btn-success">Add</button>
         <a [routerLink]="['/products']" class="btn btn-danger"> Back</a>

@@ -22,7 +22,7 @@ export class ServicesService {
     return this.http.get<ApiResponse>(this.baseUrl + 'products');
   }
 
-  createProduct(product: Product): Observable<ApiResponse> {
+  createProduct(product): Observable<ApiResponse> {
     return this.http.post<ApiResponse>(this.baseUrl + 'product/add', product);
   }
 

@@ -1,3 +1,5 @@
+const upload = require('../helpers/image-upload.helper').imageUpload;
+
 /**
  * @api {post} /product/add 
  * @apiName Adding Product
@@ -7,31 +9,38 @@
  * @apiParam {String} price      Product Price
  */
 exports.addProduct = (req, res) => {
-
-    var requiredFields = {
-        'name': 'string',
-        'description': 'string',
-        'price': 'float',
-    };
-
-    var params = req.body;
-
-    if (vh.validate(res, requiredFields, params)) {
-        var productData = {
-            name: params.name,
-            description: params.description,
-            price: params.price,
-            status: 1
-
+   
+    upload(req, res).then(() => {
+        
+        var requiredFields = {
+            'name': 'string',
+            'description': 'string',
+            'price': 'float',
+        };
+    
+        var params = req.body;
+        
+        if (vh.validate(res, requiredFields, params)) {
+            var productData = {
+                name: params.name,
+                description: params.description,
+                price: params.price,
+                status: 1,
+                image: params.image
+    
+            }
+            model.Products.create(productData).then(data => {
+                cres.send(res, data, "Product addded successfully");
+            }).catch(err => {
+                cres.statusError(res);
+            });
+    
         }
-        console.log(productData);
-        model.Products.create(productData).then(data => {
-            cres.send(res, data, "Product addded successfully");
-        }).catch(err => {
-            cres.statusError(res);
-        });
-
-    }
+    }).catch(err => {
+        console.log(err);
+        cres.error(res, 'Something went wrong');
+    });
+    
 }
 
 /**
@@ -70,7 +79,7 @@ exports.updateProduct = (req, res) => {
  */
 exports.getAllProducts = (req, res) => {
     model.Products.findAll({
-        attributes: ['productId', 'name', 'description', 'price', 'status'],
+        attributes: ['productId', 'name', 'description', 'price','image','status'],
         where: { 'status': 1 },
         order: [['productId', 'DESC']]
 
